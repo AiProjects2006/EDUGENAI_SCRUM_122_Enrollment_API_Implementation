@@ -26,4 +26,11 @@ public class EnrollmentController {
         EnrollmentResponse response = enrollmentService.createOrUpdateEnrollment(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Get student enrollment")
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<EnrollmentResponse> getStudentEnrollment(@PathVariable Long studentId) {
+        EnrollmentResponse response = enrollmentService.getStudentEnrollment(studentId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

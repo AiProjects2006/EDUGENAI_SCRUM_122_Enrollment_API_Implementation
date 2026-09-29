@@ -4,6 +4,7 @@ import com.edugenai.enrollment.dto.request.GradeEnrollmentRequest;
 import com.edugenai.enrollment.dto.response.EnrollmentResponse;
 import com.edugenai.enrollment.entity.Enrollment;
 import com.edugenai.enrollment.enums.EnrollmentStatus;
+import com.edugenai.enrollment.exception.ResourceNotFoundException;
 import com.edugenai.enrollment.repository.EnrollmentRepository;
 import com.edugenai.enrollment.service.EnrollmentService;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
         return mapToResponse(savedEnrollment);
+    }
+
+    @Override
+    public EnrollmentResponse getStudentEnrollment(Long studentId) {
+        Enrollment enrollment = enrollmentRepository.findByStudentId(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found for student ID: " + studentId));
+        return mapToResponse(enrollment);
     }
 
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {

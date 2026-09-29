@@ -3,25 +3,22 @@ package com.edugenai.enrollment.entity;
 import com.edugenai.enrollment.enums.EnrollmentStatus;
 import com.edugenai.enrollment.enums.GradeLevel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "enrollments", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "student_id")
-})
-@Data
-@Builder
+@Table(name = "enrollments", uniqueConstraints = {@UniqueConstraint(columnNames = "student_id")})
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "enrollment_id")
     private Long enrollmentId;
 
     @Column(name = "student_id", nullable = false, unique = true)
@@ -32,7 +29,7 @@ public class Enrollment {
     private GradeLevel gradeLevel;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private EnrollmentStatus status;
 
     @Column(name = "enrollment_date", nullable = false, updatable = false)
@@ -43,12 +40,12 @@ public class Enrollment {
 
     @PrePersist
     protected void onCreate() {
-        this.enrollmentDate = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        enrollmentDate = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 }

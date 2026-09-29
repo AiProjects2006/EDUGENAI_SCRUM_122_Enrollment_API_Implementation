@@ -5,4 +5,5 @@ import com.edugenai.enrollment.dto.response.EnrollmentResponse;
 
 public interface EnrollmentService {
     EnrollmentResponse createOrUpdateEnrollment(GradeEnrollmentRequest request);
+    EnrollmentResponse getStudentEnrollment(Long studentId);
 }

@@ -44,7 +44,7 @@ public class EnrollmentServiceTest {
                 .enrollmentDate(LocalDateTime.now())
                 .build();
 
-
+        when(enrollmentRepository.findByStudentId(100L)).thenReturn(Optional.empty());
         when(enrollmentRepository.save(any(Enrollment.class))).thenReturn(savedEnrollment);
 
         EnrollmentResponse response = enrollmentService.createOrUpdateEnrollment(request);

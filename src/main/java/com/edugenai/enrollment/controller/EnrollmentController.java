@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class EnrollmentController {
     private final EnrollmentService enrollmentService;
 
     @PostMapping
-    public ResponseEntity<EnrollmentResponse> createEnrollment(@RequestBody CourseEnrollmentRequest request) {
+    public ResponseEntity<EnrollmentResponse> createEnrollment(@Valid @RequestBody CourseEnrollmentRequest request) {
         return new ResponseEntity<>(enrollmentService.createEnrollment(request), HttpStatus.CREATED);
     }
 

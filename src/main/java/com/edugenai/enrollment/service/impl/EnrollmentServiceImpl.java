@@ -22,21 +22,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse createOrUpdateEnrollment(GradeEnrollmentRequest request) {
-        Optional<Enrollment> existingEnrollmentOptional = enrollmentRepository.findByStudentId(request.getStudentId());
-
-        Enrollment enrollment;
-        if (existingEnrollmentOptional.isPresent()) {
-            enrollment = existingEnrollmentOptional.get();
-            enrollment.setGradeLevel(request.getGradeLevel());
-            enrollment.setStatus(EnrollmentStatus.ACTIVE);
-        } else {
-            enrollment = Enrollment.builder()
-                    .studentId(request.getStudentId())
-                    .gradeLevel(request.getGradeLevel())
-                    .status(EnrollmentStatus.ACTIVE)
-                    .build();
-        }
-
+        Enrollment enrollment = Enrollment.builder()
+                .studentId(request.getStudentId())
+                .gradeLevel(request.getGradeLevel())
+                .status(EnrollmentStatus.ACTIVE)
+                .build();
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
         return mapToResponse(savedEnrollment);
     }
@@ -48,14 +38,22 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return mapToResponse(enrollment);
     }
 
+    @Override
+    public java.util.List<EnrollmentResponse> getAllEnrollments() {
+        return enrollmentRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {
         return EnrollmentResponse.builder()
                 .enrollmentId(enrollment.getEnrollmentId())
                 .studentId(enrollment.getStudentId())
                 .gradeLevel(enrollment.getGradeLevel())
-                .category(enrollment.getGradeLevel().getCategory())
+
                 .status(enrollment.getStatus())
                 .enrollmentDate(enrollment.getEnrollmentDate())
+                .updatedAt(enrollment.getUpdatedAt())
                 .build();
     }
 }

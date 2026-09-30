@@ -31,7 +31,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return mapToResponse(savedEnrollment);
     }
 
-
+    @Override
+    public EnrollmentResponse getStudentEnrollment(Long studentId) {
+        Enrollment enrollment = enrollmentRepository.findByStudentId(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found for student ID: " + studentId));
+        return mapToResponse(enrollment);
+    }
 
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {
         return EnrollmentResponse.builder()

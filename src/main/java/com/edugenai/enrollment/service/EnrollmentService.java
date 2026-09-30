@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EnrollmentService {
     EnrollmentResponse createOrUpdateEnrollment(GradeEnrollmentRequest request);
+    EnrollmentResponse getStudentEnrollment(Long studentId);
 }

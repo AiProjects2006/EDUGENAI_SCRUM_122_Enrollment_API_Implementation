@@ -34,4 +34,10 @@ public class EnrollmentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "List all student enrollments")
+    @GetMapping
+    public ResponseEntity<java.util.List<EnrollmentResponse>> getAllEnrollments() {
+        java.util.List<EnrollmentResponse> responses = enrollmentService.getAllEnrollments();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 }

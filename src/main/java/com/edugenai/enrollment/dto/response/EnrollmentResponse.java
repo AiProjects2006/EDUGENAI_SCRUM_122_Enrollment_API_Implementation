@@ -17,7 +17,8 @@ public class EnrollmentResponse {
     private Long enrollmentId;
     private Long studentId;
     private GradeLevel gradeLevel;
-    private String category;
+
     private EnrollmentStatus status;
     private LocalDateTime enrollmentDate;
+    private LocalDateTime updatedAt;
 }

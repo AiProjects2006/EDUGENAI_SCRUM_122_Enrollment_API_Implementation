@@ -28,4 +28,9 @@ public class EnrollmentController {
     public ResponseEntity<List<EnrollmentResponse>> getEnrollmentsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(enrollmentService.getEnrollmentsByUserId(userId));
     }
+
+    @GetMapping
+    public ResponseEntity<List<EnrollmentResponse>> getAllEnrollments() {
+        return ResponseEntity.ok(enrollmentService.getAllEnrollments());
+    }
 }

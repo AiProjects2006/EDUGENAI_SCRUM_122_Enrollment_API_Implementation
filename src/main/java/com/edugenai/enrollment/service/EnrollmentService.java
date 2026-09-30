@@ -7,4 +7,5 @@ public interface EnrollmentService {
     EnrollmentResponse createEnrollment(CourseEnrollmentRequest request);
     EnrollmentResponse getEnrollmentById(Long enrollmentId);
     List<EnrollmentResponse> getEnrollmentsByUserId(Long userId);
+    List<EnrollmentResponse> getAllEnrollments();
 }

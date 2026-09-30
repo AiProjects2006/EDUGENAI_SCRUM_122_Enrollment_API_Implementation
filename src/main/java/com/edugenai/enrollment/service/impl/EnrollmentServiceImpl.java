@@ -41,6 +41,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<EnrollmentResponse> getAllEnrollments() {
+        return enrollmentRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {
         return EnrollmentResponse.builder()
                 .enrollmentId(enrollment.getEnrollmentId())

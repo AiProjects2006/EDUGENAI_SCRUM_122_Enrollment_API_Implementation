@@ -50,7 +50,6 @@ public class EnrollmentControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.studentId").value(100))
-
+                .andExpect(jsonPath("$.studentId").value(100));
     }
 }

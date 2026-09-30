@@ -56,6 +56,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
                 .status(enrollment.getStatus())
                 .enrollmentDate(enrollment.getEnrollmentDate())
+                .updatedAt(enrollment.getUpdatedAt())
                 .build();
     }
 }

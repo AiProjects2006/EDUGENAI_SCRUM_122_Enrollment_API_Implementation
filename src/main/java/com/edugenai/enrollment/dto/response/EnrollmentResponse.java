@@ -20,4 +20,5 @@ public class EnrollmentResponse {
 
     private EnrollmentStatus status;
     private LocalDateTime enrollmentDate;
+    private LocalDateTime updatedAt;
 }

@@ -18,6 +18,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse createEnrollment(CourseEnrollmentRequest request) {
+        if (enrollmentRepository.existsByUserIdAndCourseId(request.getUserId(), request.getCourseId())) {
+            throw new RuntimeException("Student is already enrolled in this course");
+        }
+
         Enrollment enrollment = Enrollment.builder()
                 .userId(request.getUserId())
                 .courseId(request.getCourseId())

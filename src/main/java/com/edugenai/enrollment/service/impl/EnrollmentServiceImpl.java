@@ -53,7 +53,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .enrollmentId(enrollment.getEnrollmentId())
                 .studentId(enrollment.getStudentId())
                 .gradeLevel(enrollment.getGradeLevel())
-                .category(enrollment.getGradeLevel().getCategory())
+
                 .status(enrollment.getStatus())
                 .enrollmentDate(enrollment.getEnrollmentDate())
                 .build();

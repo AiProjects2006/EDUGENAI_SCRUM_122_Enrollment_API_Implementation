@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.edugenai.enrollment.controller.EnrollmentControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.91 s -- in com.edugenai.enrollment.controller.EnrollmentControllerTest

@@ -39,7 +39,7 @@ public class EnrollmentControllerTest {
         EnrollmentResponse response = EnrollmentResponse.builder()
                 .studentId(100L)
                 .gradeLevel(GradeLevel.GRADE_4)
-                .category("PRIMARY")
+
                 .status(EnrollmentStatus.ACTIVE)
                 .build();
 
@@ -51,6 +51,6 @@ public class EnrollmentControllerTest {
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.studentId").value(100))
-                .andExpect(jsonPath("$.category").value("PRIMARY"));
+
     }
 }

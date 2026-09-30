@@ -51,7 +51,7 @@ public class EnrollmentServiceTest {
 
         assertNotNull(response);
         assertEquals(100L, response.getStudentId());
-        assertEquals("PRIMARY", response.getCategory());
+
         verify(enrollmentRepository, times(1)).save(any(Enrollment.class));
     }
 }

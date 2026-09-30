@@ -22,11 +22,21 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponse createOrUpdateEnrollment(GradeEnrollmentRequest request) {
-        Enrollment enrollment = Enrollment.builder()
-                .studentId(request.getStudentId())
-                .gradeLevel(request.getGradeLevel())
-                .status(EnrollmentStatus.ACTIVE)
-                .build();
+        Optional<Enrollment> existingEnrollmentOptional = enrollmentRepository.findByStudentId(request.getStudentId());
+
+        Enrollment enrollment;
+        if (existingEnrollmentOptional.isPresent()) {
+            enrollment = existingEnrollmentOptional.get();
+            enrollment.setGradeLevel(request.getGradeLevel());
+            enrollment.setStatus(EnrollmentStatus.ACTIVE);
+        } else {
+            enrollment = Enrollment.builder()
+                    .studentId(request.getStudentId())
+                    .gradeLevel(request.getGradeLevel())
+                    .status(EnrollmentStatus.ACTIVE)
+                    .build();
+        }
+
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
         return mapToResponse(savedEnrollment);
     }

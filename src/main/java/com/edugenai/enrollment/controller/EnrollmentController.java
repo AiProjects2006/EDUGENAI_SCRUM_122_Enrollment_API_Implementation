@@ -6,13 +6,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/enrollments")
 @RequiredArgsConstructor
 public class EnrollmentController {
     private final EnrollmentService enrollmentService;
+
     @PostMapping
     public ResponseEntity<EnrollmentResponse> createEnrollment(@RequestBody CourseEnrollmentRequest request) {
         return new ResponseEntity<>(enrollmentService.createEnrollment(request), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{enrollmentId}")
+    public ResponseEntity<EnrollmentResponse> getEnrollmentById(@PathVariable Long enrollmentId) {
+        return ResponseEntity.ok(enrollmentService.getEnrollmentById(enrollmentId));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<EnrollmentResponse>> getEnrollmentsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(enrollmentService.getEnrollmentsByUserId(userId));
     }
 }

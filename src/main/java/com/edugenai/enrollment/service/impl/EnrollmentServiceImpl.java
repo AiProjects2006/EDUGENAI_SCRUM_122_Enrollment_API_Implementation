@@ -38,6 +38,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return mapToResponse(enrollment);
     }
 
+    @Override
+    public java.util.List<EnrollmentResponse> getAllEnrollments() {
+        return enrollmentRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {
         return EnrollmentResponse.builder()
                 .enrollmentId(enrollment.getEnrollmentId())

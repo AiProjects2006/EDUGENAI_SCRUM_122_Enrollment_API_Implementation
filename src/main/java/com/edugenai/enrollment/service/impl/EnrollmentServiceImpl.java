@@ -2,9 +2,11 @@ package com.edugenai.enrollment.service.impl;
 import com.edugenai.enrollment.dto.request.CourseEnrollmentRequest;
 import com.edugenai.enrollment.dto.response.EnrollmentResponse;
 import com.edugenai.enrollment.entity.Enrollment;
+import com.edugenai.enrollment.entity.EnrollmentHistory;
 import com.edugenai.enrollment.enums.EnrollmentStatus;
 import com.edugenai.enrollment.exception.ResourceNotFoundException;
 import com.edugenai.enrollment.repository.EnrollmentRepository;
+import com.edugenai.enrollment.repository.EnrollmentHistoryRepository;
 import com.edugenai.enrollment.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
+    private final EnrollmentHistoryRepository enrollmentHistoryRepository;
 
     @Override
     public EnrollmentResponse createEnrollment(CourseEnrollmentRequest request) {
@@ -28,6 +31,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .status(EnrollmentStatus.ACTIVE)
                 .build();
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
+
+        // Auto-save history log
+        EnrollmentHistory history = EnrollmentHistory.builder()
+                .enrollmentId(savedEnrollment.getEnrollmentId())
+                .status(savedEnrollment.getStatus().name())
+                .changedBy("SYSTEM")
+                .build();
+        enrollmentHistoryRepository.save(history);
+
         return mapToResponse(savedEnrollment);
     }
 

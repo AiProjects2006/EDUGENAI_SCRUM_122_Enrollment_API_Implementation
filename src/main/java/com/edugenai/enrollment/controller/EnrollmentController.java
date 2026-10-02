@@ -1,6 +1,7 @@
 package com.edugenai.enrollment.controller;
 import com.edugenai.enrollment.dto.request.CourseEnrollmentRequest;
 import com.edugenai.enrollment.dto.response.EnrollmentResponse;
+import com.edugenai.enrollment.entity.EnrollmentHistory;
 import com.edugenai.enrollment.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,10 @@ public class EnrollmentController {
     @GetMapping
     public ResponseEntity<List<EnrollmentResponse>> getAllEnrollments() {
         return ResponseEntity.ok(enrollmentService.getAllEnrollments());
+    }
+
+    @GetMapping("/{enrollmentId}/history")
+    public ResponseEntity<List<EnrollmentHistory>> getEnrollmentHistory(@PathVariable Long enrollmentId) {
+        return ResponseEntity.ok(enrollmentService.getEnrollmentHistory(enrollmentId));
     }
 }

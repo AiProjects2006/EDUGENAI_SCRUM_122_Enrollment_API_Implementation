@@ -18,4 +18,14 @@ public class LearningPreferenceController {
     public ResponseEntity<LearningPreferenceResponse> createPreference(@Valid @RequestBody LearningPreferenceRequest request) {
         return new ResponseEntity<>(preferenceService.createPreference(request), HttpStatus.CREATED);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<LearningPreferenceResponse> getPreferenceByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(preferenceService.getPreferenceByUserId(userId));
+    }
+
+    @PutMapping("/user/{userId}")
+    public ResponseEntity<LearningPreferenceResponse> updatePreference(@PathVariable Long userId, @Valid @RequestBody LearningPreferenceRequest request) {
+        return ResponseEntity.ok(preferenceService.updatePreference(userId, request));
+    }
 }

@@ -3,24 +3,37 @@ import com.edugenai.enrollment.dto.request.CourseEnrollmentRequest;
 import com.edugenai.enrollment.dto.response.EnrollmentResponse;
 import com.edugenai.enrollment.entity.Enrollment;
 import com.edugenai.enrollment.entity.EnrollmentHistory;
+import com.edugenai.enrollment.entity.Subscription;
 import com.edugenai.enrollment.enums.EnrollmentStatus;
 import com.edugenai.enrollment.exception.ResourceNotFoundException;
 import com.edugenai.enrollment.repository.EnrollmentRepository;
 import com.edugenai.enrollment.repository.EnrollmentHistoryRepository;
+import com.edugenai.enrollment.repository.SubscriptionRepository;
 import com.edugenai.enrollment.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
     private final EnrollmentHistoryRepository enrollmentHistoryRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
     @Override
     public EnrollmentResponse createEnrollment(CourseEnrollmentRequest request) {
+        // Validate Subscription BEFORE Enrolling
+        Subscription subscription = subscriptionRepository.findByUserId(request.getUserId())
+                .orElseThrow(() -> new RuntimeException("Student does not have an active subscription"));
+
+        if (!"ACTIVE".equals(subscription.getStatus()) || subscription.getEndDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Student subscription is expired or inactive");
+        }
+
+        // Validate Duplicate Enrollment
         if (enrollmentRepository.existsByUserIdAndCourseId(request.getUserId(), request.getCourseId())) {
             throw new RuntimeException("Student is already enrolled in this course");
         }

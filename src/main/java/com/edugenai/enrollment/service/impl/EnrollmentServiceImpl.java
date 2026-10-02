@@ -78,6 +78,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .courseId(enrollment.getCourseId())
                 .status(enrollment.getStatus())
                 .enrollmentDate(enrollment.getEnrollmentDate())
+                .lastAccessed(enrollment.getLastAccessed())
+                .createDate(enrollment.getCreateDate())
+                .lastUpdate(enrollment.getLastUpdate())
                 .build();
     }
 }

@@ -32,7 +32,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .build();
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
 
-        // Auto-save history log
         EnrollmentHistory history = EnrollmentHistory.builder()
                 .enrollmentId(savedEnrollment.getEnrollmentId())
                 .status(savedEnrollment.getStatus().name())
@@ -62,6 +61,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return enrollmentRepository.findAll().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EnrollmentHistory> getEnrollmentHistory(Long enrollmentId) {
+        if (!enrollmentRepository.existsById(enrollmentId)) {
+            throw new ResourceNotFoundException("Enrollment not found with id: " + enrollmentId);
+        }
+        return enrollmentHistoryRepository.findByEnrollmentIdOrderByChangedDateDesc(enrollmentId);
     }
 
     private EnrollmentResponse mapToResponse(Enrollment enrollment) {

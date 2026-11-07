@@ -1,4 +1,5 @@
 com\edugenai\enrollment\dto\request\LearningPreferenceRequest.class
+com\edugenai\enrollment\dto\request\UpdateEnrollmentStatusRequest.class
 com\edugenai\enrollment\dto\response\EnrollmentResponse.class
 com\edugenai\enrollment\repository\LearningPreferenceRepository.class
 com\edugenai\enrollment\dto\response\SubscriptionResponse.class
@@ -21,9 +22,11 @@ com\edugenai\enrollment\service\SubscriptionService.class
 com\edugenai\enrollment\repository\EnrollmentRepository.class
 com\edugenai\enrollment\entity\EnrollmentHistory.class
 com\edugenai\enrollment\dto\response\LearningPreferenceResponse$LearningPreferenceResponseBuilder.class
+com\edugenai\enrollment\dto\request\CourseEnrollmentRequest$CourseEnrollmentRequestBuilder.class
 com\edugenai\enrollment\dto\request\CourseEnrollmentRequest.class
 com\edugenai\enrollment\repository\EnrollmentHistoryRepository.class
 com\edugenai\enrollment\service\EnrollmentService.class
+com\edugenai\enrollment\dto\request\UpdateEnrollmentStatusRequest$UpdateEnrollmentStatusRequestBuilder.class
 com\edugenai\enrollment\enums\EnrollmentStatus.class
 com\edugenai\enrollment\entity\Enrollment$EnrollmentBuilder.class
 com\edugenai\enrollment\dto\response\EnrollmentResponse$EnrollmentResponseBuilder.class
@@ -32,3 +35,4 @@ com\edugenai\enrollment\entity\EnrollmentHistory$EnrollmentHistoryBuilder.class
 com\edugenai\enrollment\dto\response\SubscriptionResponse$SubscriptionResponseBuilder.class
 com\edugenai\enrollment\repository\SubscriptionRepository.class
 com\edugenai\enrollment\controller\EnrollmentController.class
+com\edugenai\enrollment\config\EnrollmentSchemaInitializer.class

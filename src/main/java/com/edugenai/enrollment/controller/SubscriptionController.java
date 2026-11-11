@@ -18,4 +18,9 @@ public class SubscriptionController {
     public ResponseEntity<SubscriptionResponse> createSubscription(@Valid @RequestBody SubscriptionRequest request) {
         return new ResponseEntity<>(subscriptionService.createSubscription(request), HttpStatus.CREATED);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<SubscriptionResponse> getSubscriptionByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(subscriptionService.getSubscriptionByUserId(userId));
+    }
 }

@@ -2,6 +2,7 @@ package com.edugenai.enrollment.service.impl;
 import com.edugenai.enrollment.dto.request.SubscriptionRequest;
 import com.edugenai.enrollment.dto.response.SubscriptionResponse;
 import com.edugenai.enrollment.entity.Subscription;
+import com.edugenai.enrollment.exception.ResourceNotFoundException;
 import com.edugenai.enrollment.repository.SubscriptionRepository;
 import com.edugenai.enrollment.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,24 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 .build();
         
         Subscription saved = subscriptionRepository.save(subscription);
+        return mapToResponse(saved);
+    }
 
+    @Override
+    public SubscriptionResponse getSubscriptionByUserId(Long userId) {
+        Subscription subscription = subscriptionRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("No subscription found for user: " + userId));
+        return mapToResponse(subscription);
+    }
+
+    private SubscriptionResponse mapToResponse(Subscription subscription) {
         return SubscriptionResponse.builder()
-                .subscriptionId(saved.getSubscriptionId())
-                .userId(saved.getUserId())
-                .planType(saved.getPlanType())
-                .startDate(saved.getStartDate())
-                .endDate(saved.getEndDate())
-                .status(saved.getStatus())
+                .subscriptionId(subscription.getSubscriptionId())
+                .userId(subscription.getUserId())
+                .planType(subscription.getPlanType())
+                .startDate(subscription.getStartDate())
+                .endDate(subscription.getEndDate())
+                .status(subscription.getStatus())
                 .build();
     }
 }
